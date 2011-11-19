@@ -1,0 +1,30 @@
+body {
+	background: #EEE;
+	width:600px;
+	margin:auto;
+	font-family:sans-serif;
+}
+
+#password {
+	float:left;
+	border:1px solid #999;
+	padding:10px;
+	height:15px;
+	width:150px;
+	margin-top:20px;
+}
+
+#password_hash {
+	float:left;
+	margin:20px 0 30px 15px;
+}
+
+	#one, #two, #three {
+		width: 15px;
+		float:left;
+		height:15px;
+		background:#fff;
+		border:1px solid #999;
+		padding:10px;
+		margin-right:10px;
+	}
