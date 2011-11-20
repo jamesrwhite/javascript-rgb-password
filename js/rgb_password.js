@@ -2,7 +2,7 @@
 *
 * RGB Password
 * @author: James White
-* @date: 19/11/11
+* @date: 20/11/11
 *
 */
 
@@ -36,20 +36,20 @@ window.onload = function() {
 			+ rgb_values.three.g + ", "
 			+ rgb_values.three.b +
 		")";
+		
+		console.log("1: " + document.getElementById("one").style.backgroundColor);
+		console.log("2: " + document.getElementById("two").style.backgroundColor);
+		console.log("3: " + document.getElementById("three").style.backgroundColor);
 	
 	};
 	
-	var characters = [
-		
-		"a","A","b","B","c","C","d","D","e","E","f","F","g","G","h","H","i","I","j", "J","k","K","l","L","m","M","n","N","o","O","p","P","q","Q","r","R","s","S","t","T","u","U","v","V","w","W","x","X","y","Y","z","Z","1","2","3","4","5","6","7","8","9", "0", ".", "_"
-		
-	];
+	var characters = ["p", "J", "i", "3", "M", "g", "U", "x", "Z", "B", "w", "S", "W", "u", "j", "A", "D", "Q", "N", "s", "K", "G", "O", "z", "_", "l", "H", "R", "k", "6", "b", "h", "q", "d", "e", "Y", "1", "c", ".", "4", "v", "L", "y", "f", "7", "2", "V", "0", "a", "n", "E", "F", "5", "9", "8", "m", "r", "t", "X", "C", "I", "T", "P", "o"];
 	
 	var rgb = {};
 	
 	rgb.getValue = function (input) {
 	
-		// Split our string into 3 parts
+		// Set up our slices object and it's default values
 		var slices = {
 		
 			one: {
@@ -96,7 +96,7 @@ window.onload = function() {
 		
 		}
 		
-		// If it is divisiable evenly by three then um, do so?
+		// If possible divide the password into 3 equals slices
 		if( input.length % 3 === 0 ) {
 		
 			slices.one.length = input.length / 3;
@@ -120,18 +120,6 @@ window.onload = function() {
 		slices.one.value = input.substr(0, slices.one.length);
 		slices.two.value = input.substr(slices.one.length, slices.two.length);
 		slices.three.value = input.substr(slices.two.length, slices.three.length);
-		
-		function sortAscending(a, b) {
-		
-			return a - b;
-		
-		}
-		
-		function sortDescending(a, b) {
-		
-			return b - a;
-		
-		}
 			
 		// Loop through each slice of the password
 		for(var slice_number in slices) {
@@ -143,42 +131,47 @@ window.onload = function() {
 				
 			for(colour in slice.rgb_value) {
 				
-				// Sort the array
-				characters.sort();
+				// Take a copy of the array so we don"t
+				// mess up the original random order it"s in
+				characters_array = characters;
 				
-				// for g we want to reverse it's order to ensure we
-				// get nice pretty RGB colours!
-				if( colour == 'g' ) {
+				// Need to find a better way of sorting the array's
+				// that isn't random so the patterns can still be
+				// recognised each time but still produces enough
+				// different colours
 				
-					characters.reverse();
-					
+				if( colour == "r" ) {
+				
+					characters_array.reverse();
+				
 				}
 				
-				// and for b let's try randomising it's order
-				else if( colour == 'b' ) {
+				//else if( colour == "g" ) {
 				
-					characters.sort(function() {
+					// Nothing much going on here..
 					
-						return 0.5 - Math.random();
-					
-					});
+				//}
+				
+				else if( colour == "b" ) {
+				
+					characters_array.reverse();
 					
 				}
 				
 				// Loop through all the characters(and numbers) in our characters object
-				for(character_key in characters) {
+				for(character_key in characters_array) {
 					
-					character = characters[character_key];
+					character = characters_array[character_key];
 					
-					// Add 1 to the character key to avoid having 0 for the first
-					// array value
-					character_value = parseInt(character_key) + 1;
+					// Add 20 to the character value so we get some
+					// *slightly* nicer colours
+					character_value = parseInt(character_key) + 15;
 					
 					if( slice.value.indexOf(character) !== -1 ) {
 					
-						slice.rgb_value[colour] = Math.floor( (255/64) * character_value);
+						slice.rgb_value[colour] = Math.floor( (240/64) * character_value);
 						
-						// We've found our character match, so let's not carry on looping
+						// We"ve found our character match, so let's not carry on looping
 						break;
 					
 					}
