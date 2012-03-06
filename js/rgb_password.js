@@ -20,21 +20,21 @@ window.onload = function() {
 		var rgb_values = rgb.getValue(this.value);
 		
 		document.getElementById("one").style.backgroundColor = "rgb("
-			+ rgb_values.one.r + ", "
-			+ rgb_values.one.g + ", "
-			+ rgb_values.one.b +
+			+ rgb_values[0].r + ", "
+			+ rgb_values[0].g + ", "
+			+ rgb_values[0].b +
 		")";
 				
 		document.getElementById("two").style.backgroundColor = "rgb("
-			+ rgb_values.two.r + ", "
-			+ rgb_values.two.g + ", "
-			+ rgb_values.two.b +
+			+ rgb_values[1].r + ", "
+			+ rgb_values[1].g + ", "
+			+ rgb_values[1].b +
 		")";
 		
 		document.getElementById("three").style.backgroundColor = "rgb("
-			+ rgb_values.three.r + ", "
-			+ rgb_values.three.g + ", "
-			+ rgb_values.three.b +
+			+ rgb_values[2].r + ", "
+			+ rgb_values[2].g + ", "
+			+ rgb_values[2].b +
 		")";
 		
 		console.log("1: " + document.getElementById("one").style.backgroundColor);
@@ -42,66 +42,33 @@ window.onload = function() {
 		console.log("3: " + document.getElementById("three").style.backgroundColor);
 	
 	};
-	
+
 	var characters = ["p", "J", "i", "3", "M", "g", "U", "x", "Z", "B", "w", "S", "W", "u", "j", "A", "D", "Q", "N", "s", "K", "G", "O", "z", "_", "l", "H", "R", "k", "6", "b", "h", "q", "d", "e", "Y", "1", "c", ".", "4", "v", "L", "y", "f", "7", "2", "V", "0", "a", "n", "E", "F", "5", "9", "8", "m", "r", "t", "X", "C", "I", "T", "P", "o"];
-	
+
 	var rgb = {};
 	
 	rgb.getValue = function (input) {
 	
 		// Set up our slices object and it's default values
-		var slices = {
-		
-			one: {
-			
-				length: 0,
-				value: "",
-				rgb_value: {
-				
-					r: 255,
-					g: 255,
-					b: 255
-				
-				}
-			
-			},
-			
-			two: {
-			
-				length: 0,
-				value: "",
-				rgb_value: {
-				
-					r: 255,
-					g: 255,
-					b: 255
-				
-				}
-			
-			},
-			
-			three: {
-			
-				length: 0,
-				value: "",
-				rgb_value: {
-				
-					r: 255,
-					g: 255,
-					b: 255
-				
-				}
-			
-			}
-		
+		var slices = [];
+		for (var i=0; i < 3; i++) {
+		  slices.push({
+  			length: 0,
+  			value: "",
+  			rgb_value: {
+  				r: 255,
+  				g: 255,
+  				b: 255
+  			}
+  		});
 		}
 		
 		// If possible divide the password into 3 equals slices
 		if( input.length % 3 === 0 ) {
 		
-			slices.one.length = input.length / 3;
-			slices.two.length = input.length / 3;
-			slices.three.length = input.length / 3;
+			slices[0].length = input.length / 3;
+			slices[1].length = input.length / 3;
+			slices[2].length = input.length / 3;
 		
 		}
 		
@@ -110,16 +77,16 @@ window.onload = function() {
 		
 			var rounded_third = Math.ceil(input.length / 3);
 		
-			slices.one.length = rounded_third; // 33%
-			slices.two.length = rounded_third; // 33%
-			slices.three.length = input.length - (2 * rounded_third); // 34%
+			slices[0].length = rounded_third; // 33%
+			slices[1].length = rounded_third; // 33%
+			slices[2].length = input.length - (2 * rounded_third); // 34%
 		
 		}
 		
 		// Slice up the password!
-		slices.one.value = input.substr(0, slices.one.length);
-		slices.two.value = input.substr(slices.one.length, slices.two.length);
-		slices.three.value = input.substr(slices.two.length, slices.three.length);
+		slices[0].value = input.substr(0, slices[0].length);
+		slices[1].value = input.substr(slices[0].length, slices[1].length);
+		slices[2].value = input.substr(slices[1].length, slices[2].length);
 			
 		// Loop through each slice of the password
 		for(var slice_number in slices) {
@@ -182,13 +149,11 @@ window.onload = function() {
 		
 		}
 		
-		return {
-		
-			one: slices.one.rgb_value,
-			two: slices.two.rgb_value,
-			three: slices.three.rgb_value,
-		
-		};
+		return [
+			slices[0].rgb_value,
+			slices[1].rgb_value,
+			slices[2].rgb_value,
+		];
 	
 	}
 	
