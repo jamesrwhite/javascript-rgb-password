@@ -11,7 +11,11 @@ window.onload = function() {
 	var password = {
 			
 		selector: document.getElementById("password"),
-		hash_selector: document.getElementById("password_hash"),
+		boxes: [
+		  document.getElementById("one"),
+		  document.getElementById("two"),
+		  document.getElementById("three")
+		]
 		
 	};
 	
@@ -19,27 +23,17 @@ window.onload = function() {
 	
 		var rgb_values = rgb.getValue(this.value);
 		
-		document.getElementById("one").style.backgroundColor = "rgb("
-			+ rgb_values[0].r + ", "
-			+ rgb_values[0].g + ", "
-			+ rgb_values[0].b +
-		")";
-				
-		document.getElementById("two").style.backgroundColor = "rgb("
-			+ rgb_values[1].r + ", "
-			+ rgb_values[1].g + ", "
-			+ rgb_values[1].b +
-		")";
+		for(var i in password.boxes) {
+		  var box = password.boxes[i];
+
+  		box.style.backgroundColor = "rgb("
+  			+ rgb_values[i].r + ", "
+  			+ rgb_values[i].g + ", "
+  			+ rgb_values[i].b +
+  		")";
 		
-		document.getElementById("three").style.backgroundColor = "rgb("
-			+ rgb_values[2].r + ", "
-			+ rgb_values[2].g + ", "
-			+ rgb_values[2].b +
-		")";
-		
-		console.log("1: " + document.getElementById("one").style.backgroundColor);
-		console.log("2: " + document.getElementById("two").style.backgroundColor);
-		console.log("3: " + document.getElementById("three").style.backgroundColor);
+  		console.log(i + ": " + box.style.backgroundColor);
+  	}
 	
 	};
 
@@ -152,7 +146,7 @@ window.onload = function() {
 		return [
 			slices[0].rgb_value,
 			slices[1].rgb_value,
-			slices[2].rgb_value,
+			slices[2].rgb_value
 		];
 	
 	}
