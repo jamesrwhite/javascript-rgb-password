@@ -69,18 +69,25 @@ window.onload = function() {
   };
   
   password.selector.onkeyup = function() {
-    for(var i in password.boxes) {
-      var box = password.boxes[i];
+    if (password.selector.value.length < 3) {
+      for(var i in password.boxes) {
+        var box = password.boxes[i];
+        box.style.backgroundColor = "";
+      }
+    } else {
+      for(var i in password.boxes) {
+        var box = password.boxes[i];
 
-      var salt = password.salts[i];
-      var hue = jenkins_hash(password.selector.value, salt)/salt;
-      var color = hslToRgb(hue, password.saturation, password.lightness);
+        var salt = password.salts[i];
+        var hue = jenkins_hash(password.selector.value, salt)/salt;
+        var color = hslToRgb(hue, password.saturation, password.lightness);
 
-      box.style.backgroundColor = "rgb("
-        + color.r + ", "
-        + color.g + ", "
-        + color.b +
-      ")";
+        box.style.backgroundColor = "rgb("
+          + color.r + ", "
+          + color.g + ", "
+          + color.b +
+        ")";
+      }
     }
   }
 }
