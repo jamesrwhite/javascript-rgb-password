@@ -6,16 +6,19 @@
 *
 */
 
-// http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
-String.prototype.hashCode = function(){
-  var hash = 0;
-  if (this.length == 0) return hash;
-  for (i = 0; i < this.length; i++) {
-    char = this.charCodeAt(i);
-    hash = ((hash<<5)-hash)+char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return hash;
+// http://findingscience.com/javascript/hashing/memcache/2010/12/28/javascript-implementation-of-jenkins-hash.html
+function jenkins_hash(key, interval_size) {
+   var hash = 0;
+   for (var i=0; i<key.length; ++i) {
+      hash += key.charCodeAt(i);
+      hash += (hash << 10);
+      hash ^= (hash >> 6);
+   }
+   hash += (hash << 3);
+   hash ^= (hash >> 11);
+   hash += (hash << 15);
+   // make unsigned and modulo interval_size
+   return (hash >>> 0) % interval_size;
 }
 
 // Based on http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
@@ -66,15 +69,13 @@ window.onload = function() {
   };
   
   password.selector.onkeyup = function() {
-    var hashCode = password.selector.value.hashCode();
-    
     for(var i in password.boxes) {
       var box = password.boxes[i];
 
       var salt = password.salts[i];
-      var hue = (hashCode % salt)/salt;
+      var hue = jenkins_hash(password.selector.value, salt)/salt;
       var color = hslToRgb(hue, password.saturation, password.lightness);
-      
+
       box.style.backgroundColor = "rgb("
         + color.r + ", "
         + color.g + ", "
