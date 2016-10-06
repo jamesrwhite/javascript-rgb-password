@@ -4,7 +4,7 @@ Generates a simple RGB pattern based on the password input. The idea is that the
 
 ## Demo
 
-[http://jamesrwhite.github.io/javascript-rgb-password/](http://jamesrwhite.github.io/javascript-rgb-password/)
+[https://jamesrwhite.github.io/javascript-rgb-password/](https://jamesrwhite.github.io/javascript-rgb-password/)
 
 Idea based on a Twitter conversation between [@jamesrwhite](https://twitter.com/jamesrwhite) and [@skattyadz](https://twitter.com/skattyadz)
 
