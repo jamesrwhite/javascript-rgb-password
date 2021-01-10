@@ -66,7 +66,11 @@ window.onload = function() {
       7432
     ]
   };
-
+  
+  function getRGBString(r,g,b){
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+  
   password.selector.onkeyup = function() {
     for (var i in password.boxes) {
       var box = password.boxes[i];
@@ -81,11 +85,7 @@ window.onload = function() {
         colour = hslToRgb(hue, password.saturation, password.lightness);
       }
 
-      box.style.backgroundColor = "rgb(" +
-        colour.r + ", " +
-        colour.g + ", " +
-        colour.b +
-      ")";
+      box.style.backgroundColor = getRGBString(colour.r, colour.g, colour.b);
     }
   };
 };
